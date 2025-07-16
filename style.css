@@ -1,0 +1,97 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #343541;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+#chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#chat-box {
+  flex-grow: 1;
+  padding: 10px;
+  overflow-y: scroll;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.input-area {
+  display: flex;
+  padding: 10px;
+  background-color: #eee;
+}
+
+.input-area input[type="text"] {
+  flex-grow: 1;
+  margin: 0 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.input-area button, #file-input {
+  padding: 10px;
+  border: none;
+  background-color: #343541;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.message {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.user-message {
+  background-color: #DCF8C6;
+  text-align: right;
+}
+
+.ai-message {
+  background-color: #E5E5EA;
+  text-align: left;
+  position: relative;
+}
+
+.audio-btn {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#login-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+#login-section input {
+  padding: 10px;
+  margin: 5px;
+}
+
+#login-section button {
+  padding: 10px;
+  background-color: #343541;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
