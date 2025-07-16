@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My AI Chat</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="login-section">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Enter your email" />
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="chat-container" class="hidden">
+    <header>
+      <h1>My AI Chat</h1>
+      <button onclick="newChat()">New Chat</button>
+    </header>
+    <div id="chat-box"></div>
+    <div class="input-area">
+      <input type="file" id="file-input" />
+      <button onclick="startRecording()">🎙️</button>
+      <input type="text" id="user-input" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
