@@ -1,32 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My AI Chat</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>AURA - Moonware AI Assistant</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f2f2f2;
+    }
+    #chatbox {
+      padding: 20px;
+      max-width: 800px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .msg {
+      margin-bottom: 10px;
+    }
+    .user { color: #0077cc; }
+    .aura { color: #444; }
+    #email-auth {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    #email-auth input {
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    #email-auth button {
+      padding: 5px 10px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-left: 5px;
+    }
+  </style>
 </head>
 <body>
-  <div id="login-section">
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="Enter your email" />
-    <button onclick="login()">Login</button>
-  </div>
 
-  <div id="chat-container" class="hidden">
-    <header>
-      <h1>My AI Chat</h1>
-      <button onclick="newChat()">New Chat</button>
-    </header>
-    <div id="chat-box"></div>
-    <div class="input-area">
-      <input type="file" id="file-input" />
-      <button onclick="startRecording()">🎙️</button>
-      <input type="text" id="user-input" placeholder="Type your message..." />
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
+<!-- Email Auth (top-right corner) -->
+<div id="email-auth">
+  <input type="email" id="email" placeholder="Enter your email" />
+  <button onclick="submitEmail()">Sign Up</button>
+</div>
 
-  <script src="script.js"></script>
+<div id="chatbox">
+  <div class="msg aura"><strong>AURA:</strong> Hello, I'm AURA — your AI assistant from Moonware. Ask me anything!</div>
+</div>
+
+<!-- Input for messages -->
+<div style="text-align: center; margin-top: 20px;">
+  <input type="text" id="userInput" placeholder="Type your message..." style="width:60%; padding:10px; border-radius:8px; border:1px solid #ccc;">
+  <button onclick="sendMessage()" style="padding:10px 20px; border:none; background:#0077cc; color:white; border-radius:8px;">Send</button>
+</div>
+
+<script>
+  const chatbox = document.getElementById('chatbox');
+
+  function submitEmail() {
+    const email = document.getElementById("email").value;
+    if (!email) return;
+
+    localStorage.setItem("aura_user_email", email);
+    fetch('/save_email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    document.getElementById("email-auth").style.display = 'none';
+  }
+
+  window.onload = () => {
+    if (localStorage.getItem("aura_user_email")) {
+      document.getElementById("email-auth").style.display = 'none';
+    }
+  }
+
+  function addMessage(sender, text) {
+    const msg = document.createElement('div');
+    msg.classList.add('msg', sender);
+    msg.innerHTML = `<strong>${sender === 'user' ? 'You' : 'AURA'}:</strong> ${text}`;
+    chatbox.appendChild(msg);
+    chatbox.scrollTop = chatbox.scrollHeight;
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('userInput');
+    const text = input.value;
+    if (!text) return;
+    addMessage('user', text);
+    input.value = '';
+
+    fetch('/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text })
+    })
+    .then(res => res.json())
+    .then(data => {
+      addMessage('aura', data.reply);
+    });
+  }
+</script>
+
 </body>
 </html>
